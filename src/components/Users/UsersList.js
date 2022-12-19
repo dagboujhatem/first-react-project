@@ -1,10 +1,11 @@
 import React from "react";
+import Wrapper from "../Helpers/Wrapper";
 import Card from "../UI/Card";
 import styles from "./UsersList.module.css";
 
 const UsersList = (props) => {
   return (
-    <div>
+    <Wrapper>
       {props.users.length === 0 && 
       <Card className={styles.users}>
         <h2>No users found</h2>
@@ -23,7 +24,7 @@ const UsersList = (props) => {
           </ul>
         </Card>
       )}
-    </div>
+    </Wrapper>
   );
 };
 
