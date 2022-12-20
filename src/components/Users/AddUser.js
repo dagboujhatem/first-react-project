@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Wrapper from "../Helpers/Wrapper";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
@@ -6,20 +6,17 @@ import ErrorModal from "../UI/ErrorModal";
 import styles from "./AddUser.module.css";
 
 function AddUser(props) {
-  const [userName, setUserName] = useState("");
-  const [userAge, setUserAge] = useState("");
-  const [error, setError] = useState();
-
-  const userNameChangeHandler = (e) => {
-    setUserName(e.target.value);
-  };
-
-  const userAgeChangeHandler = (e) => {
-    setUserAge(e.target.value);
-  };
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+  const [error, setError] = useState(); 
 
   const addUserHandler = (e) => {
     e.preventDefault();
+    // using react Ref
+    // console.log(nameInputRef)
+    // console.log(nameInputRef.current.value)
+    const userName = nameInputRef.current.value
+    const userAge = ageInputRef.current.value
     // form validation
     if (userName.trim().length === 0 || userAge.trim().length === 0) {
       setError({
@@ -45,8 +42,8 @@ function AddUser(props) {
   };
 
   const resetFormHandler = e => {
-    setUserName("");
-    setUserAge("");
+    nameInputRef.current.value = ''
+    ageInputRef.current.value = ''
   };
 
   const onConfirmHander = e => {
@@ -63,16 +60,14 @@ function AddUser(props) {
             id="username"
             type="text"
             placeholder="Type a username here"
-            value={userName}
-            onChange={userNameChangeHandler}
+            ref={nameInputRef}
           />
           <label htmlFor="age">Age (Years)</label>
           <input
             id="age"
             type="number"
             placeholder="Type a age here"
-            value={userAge}
-            onChange={userAgeChangeHandler}
+            ref={ageInputRef}
           />
           <div className={styles["actions-btn"]}>
             <Button type="submit" value="Add User" />
